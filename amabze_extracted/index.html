@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Amabze Rentals Pvt Ltd - Complete transportation and corporate mobility solutions across India.">
+  <title>Amabze Rentals Pvt Ltd | Travel Safe With Us</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--blue:#0877b9;--dark:#08283b;--light:#f5f9fc;--text:#243746;--muted:#637586;--white:#fff}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:Inter,Arial,sans-serif;color:var(--text);line-height:1.6;background:#fff}
+    a{text-decoration:none;color:inherit}
+    .container{width:min(1160px,92%);margin:auto}
+    header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid #e8eef3}
+    .nav{height:78px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800;color:var(--dark)}
+    .brand img{width:62px;height:62px;object-fit:contain}
+    .brand span{font-size:18px;letter-spacing:.3px}
+    nav{display:flex;gap:24px;align-items:center;font-size:14px;font-weight:600}
+    nav a:hover{color:var(--blue)}
+    .nav-cta{background:var(--blue);color:#fff;padding:11px 18px;border-radius:8px}
+    .menu{display:none;font-size:26px;background:none;border:0}
+    .hero{background:linear-gradient(110deg,rgba(5,38,58,.94),rgba(5,85,130,.78)),url('assets/innova.jpg') center/cover;min-height:650px;display:flex;align-items:center;color:#fff}
+    .hero-content{max-width:690px;padding:80px 0}
+    .eyebrow{display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:8px 14px;border-radius:30px;font-size:13px;font-weight:700;letter-spacing:.6px;margin-bottom:20px}
+    h1{font-size:clamp(38px,6vw,68px);line-height:1.08;margin-bottom:22px}
+    .hero p{font-size:18px;max-width:620px;color:#e5f1f8;margin-bottom:30px}
+    .buttons{display:flex;gap:14px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:13px 22px;border-radius:8px;font-weight:700;border:1px solid transparent}
+    .btn-primary{background:#fff;color:var(--dark)}
+    .btn-primary:hover{background:#e7f5fc}
+    .btn-outline{border-color:rgba(255,255,255,.65);color:#fff}
+    .btn-outline:hover{background:rgba(255,255,255,.12)}
+    .stats{background:#fff;box-shadow:0 12px 35px rgba(10,55,80,.12);border-radius:14px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:24px;margin-top:-45px;position:relative}
+    .stat{text-align:center;border-right:1px solid #e8eef3}.stat:last-child{border:0}
+    .stat strong{display:block;font-size:28px;color:var(--blue)}.stat span{font-size:13px;color:var(--muted)}
+    section{padding:92px 0}.section-head{text-align:center;max-width:720px;margin:0 auto 42px}
+    .section-head .eyebrow{color:var(--blue);background:#eaf6fc;border:0;margin-bottom:12px}
+    h2{font-size:clamp(30px,4vw,44px);color:var(--dark);line-height:1.15;margin-bottom:14px}
+    .section-head p{color:var(--muted)}
+    .about{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+    .about img{width:100%;height:420px;object-fit:cover;border-radius:18px}
+    .about h2{text-align:left}.about p{color:var(--muted);margin:14px 0}
+    .checklist{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
+    .check{font-weight:600;font-size:14px}.check::before{content:"✓";color:var(--blue);font-weight:800;margin-right:9px}
+    .services{background:var(--light)}
+    .service-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    .card{background:#fff;border:1px solid #e6eef3;border-radius:14px;padding:24px;transition:.25s}
+    .card:hover{transform:translateY(-5px);box-shadow:0 12px 30px rgba(8,65,95,.1)}
+    .icon{font-size:30px;margin-bottom:12px}.card h3{font-size:17px;color:var(--dark);margin-bottom:8px}.card p{font-size:14px;color:var(--muted)}
+    .fleet-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+    .fleet-card{border-radius:16px;overflow:hidden;background:#fff;border:1px solid #e4edf2;box-shadow:0 8px 24px rgba(0,40,65,.06)}
+    .fleet-card img{width:100%;height:220px;object-fit:cover;display:block}
+    .fleet-card .content{padding:20px}.fleet-card h3{color:var(--dark);margin-bottom:8px}.fleet-card p{color:var(--muted);font-size:14px}
+    .cities{background:var(--dark);color:#fff}.cities h2{color:#fff}.cities p{color:#c9d9e3}
+    .city-list{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:30px}
+    .city{border:1px solid rgba(255,255,255,.2);padding:10px 16px;border-radius:30px;color:#e5f2f8;font-size:14px}
+    .clients{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:30px}
+    .client{padding:12px 18px;border:1px solid #dfeaf0;border-radius:8px;font-weight:600;color:#416174;background:#fbfdfe}
+    .safety{background:var(--light)}
+    .safety-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .contact{background:linear-gradient(135deg,#0877b9,#063b5b);color:#fff}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:start}
+    .contact h2{color:#fff}.contact p{color:#dcecf4}
+    .contact-box{background:#fff;color:var(--text);border-radius:16px;padding:28px}
+    .contact-item{display:flex;gap:14px;margin-bottom:20px}.contact-item strong{display:block;color:var(--dark)}.contact-item span{color:var(--muted);font-size:14px}
+    footer{background:#041d2c;color:#b9ccd7;padding:28px 0}.footer-row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:13px}
+    @media(max-width:900px){nav{display:none}.menu{display:block}.service-grid{grid-template-columns:repeat(2,1fr)}.fleet-grid{grid-template-columns:repeat(2,1fr)}.about,.contact-grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.stat:nth-child(2){border:0}}
+    @media(max-width:600px){.brand span{font-size:15px}.hero{min-height:590px}.hero p{font-size:16px}.stats{margin-top:-25px}.service-grid,.fleet-grid,.safety-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.stat{border:0}.about img{height:300px}.checklist{grid-template-columns:1fr}section{padding:65px 0}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a class="brand" href="#home"><img src="assets/logo.jpeg" alt="Amabze Rentals logo"><span>AMABZE RENTALS PVT. LTD.</span></a>
+    <nav>
+      <a href="#about">About</a><a href="#services">Services</a><a href="#fleet">Our Fleet</a><a href="#presence">Presence</a><a href="#contact" class="nav-cta">Contact Us</a>
+    </nav>
+    <button class="menu" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="container hero-content">
+    <span class="eyebrow">TRAVEL SAFE WITH US</span>
+    <h1>Complete Transportation Solutions Across India</h1>
+    <p>Reliable car rentals, corporate mobility, employee transportation, airport transfers and event transportation — delivered with experience, technology and professional service.</p>
+    <div class="buttons"><a href="#contact" class="btn btn-primary">Get a Quote</a><a href="tel:+917982265845" class="btn btn-outline">Call +91 7982265845</a></div>
+  </div>
+</section>
+
+<div class="container stats">
+  <div class="stat"><strong>30+</strong><span>Cities Across India</span></div>
+  <div class="stat"><strong>300+</strong><span>Vehicles in Fleet</span></div>
+  <div class="stat"><strong>24/7</strong><span>Travel Support</span></div>
+  <div class="stat"><strong>100%</strong><span>Customer Focus</span></div>
+</div>
+
+<section id="about">
+  <div class="container about">
+    <div><img src="assets/corporate-sedan.jpg" alt="Amabze corporate transportation fleet"></div>
+    <div>
+      <span class="eyebrow">ABOUT AMABZE</span>
+      <h2>Professional mobility built around your time.</h2>
+      <p>Amabze Rentals Pvt. Ltd. has built a strong reputation in the transportation industry by delivering reliable, professional and customer-focused mobility solutions.</p>
+      <p>We understand the value of time and the importance of dependable transportation. Our services support corporate organizations, multinational companies, public-sector organizations, business executives and individual travelers across India.</p>
+      <div class="checklist"><div class="check">Pan-India service network</div><div class="check">300+ vehicle fleet</div><div class="check">Experienced chauffeurs</div><div class="check">Technology-enabled operations</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="container">
+    <div class="section-head"><span class="eyebrow">WHAT WE OFFER</span><h2>Transportation for every journey</h2><p>From everyday business travel to large corporate events, our services are designed around comfort, safety and efficiency.</p></div>
+    <div class="service-grid">
+      <div class="card"><div class="icon">🚗</div><h3>Spot Rentals</h3><p>Flexible local rentals for business travel, meetings, events and personal requirements.</p></div>
+      <div class="card"><div class="icon">🛣️</div><h3>Outstation Trips</h3><p>Comfortable and reliable transportation for intercity and long-distance travel.</p></div>
+      <div class="card"><div class="icon">🌍</div><h3>Tour Packages</h3><p>Customized mobility solutions for holidays, sightseeing and group tours.</p></div>
+      <div class="card"><div class="icon">✈️</div><h3>Airport Transfers</h3><p>Reliable airport pick-up and drop-off services across major cities.</p></div>
+      <div class="card"><div class="icon">👥</div><h3>Employee Transport</h3><p>Safe and efficient employee transportation services for corporate organizations.</p></div>
+      <div class="card"><div class="icon">🏢</div><h3>Corporate Services</h3><p>Dedicated mobility solutions for executives, companies and business travel.</p></div>
+      <div class="card"><div class="icon">📅</div><h3>Monthly Rentals</h3><p>Long-term vehicle rental solutions for organizations and individuals.</p></div>
+      <div class="card"><div class="icon">🎪</div><h3>Event Management</h3><p>Guest transportation, shuttles, VIP travel and complete event mobility coordination.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="fleet">
+  <div class="container">
+    <div class="section-head"><span class="eyebrow">OUR FLEET</span><h2>A vehicle for every requirement</h2><p>From economical sedans to premium cars, tempo travellers and large coaches, we provide flexible transportation choices.</p></div>
+    <div class="fleet-grid">
+      <div class="fleet-card"><img src="assets/dzire.jpg" alt="Maruti Suzuki Dzire Tour S"><div class="content"><h3>Economy & Executive Sedans</h3><p>Dzire, Etios and Ciaz for efficient city travel, business trips and airport transfers.</p></div></div>
+      <div class="fleet-card"><img src="assets/innova.jpg" alt="Toyota Innova"><div class="content"><h3>Premium & Luxury Cars</h3><p>Innova Crysta, Corolla, Camry, Mercedes-Benz, BMW and Audi for executive travel.</p></div></div>
+      <div class="fleet-card"><img src="assets/tourist-bus.jpg" alt="Tourist bus"><div class="content"><h3>Travellers, Vans & Coaches</h3><p>Tempo Traveller, Toyota Commuter, HiAce, Coaster and Volvo buses for group travel.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cities" id="presence">
+  <div class="container">
+    <div class="section-head"><span class="eyebrow">PAN-INDIA PRESENCE</span><h2>Wherever business takes you</h2><p>Our services are available in 30+ cities across India, with a growing network of professional transportation solutions.</p></div>
+    <div class="city-list">
+      <span class="city">Delhi</span><span class="city">Gurugram</span><span class="city">Mumbai</span><span class="city">Bengaluru</span><span class="city">Hyderabad</span><span class="city">Chennai</span><span class="city">Kolkata</span><span class="city">Patna</span><span class="city">Ranchi</span><span class="city">Ahmedabad</span><span class="city">Chandigarh</span><span class="city">Lucknow</span><span class="city">Pune</span><span class="city">Jaipur</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head"><span class="eyebrow">TRUSTED BY</span><h2>Our corporate clients</h2><p>We are proud to support leading organizations with dependable transportation services.</p></div>
+    <div class="clients"><span class="client">Samsung</span><span class="client">Michael Page</span><span class="client">DLF</span><span class="client">Ireo</span><span class="client">PITSTOP</span><span class="client">Wizcraft</span><span class="client">ATA</span><span class="client">Ford Mobility India</span><span class="client">Experion Care</span><span class="client">D.J. Corporation & Investment</span></div>
+  </div>
+</section>
+
+<section class="safety">
+  <div class="container">
+    <div class="section-head"><span class="eyebrow">SAFETY FIRST</span><h2>Your safety. Our responsibility.</h2><p>Professional standards, trained chauffeurs and technology-enabled operations support every journey.</p></div>
+    <div class="safety-grid">
+      <div class="card"><div class="icon">🛡️</div><h3>Professional Chauffeurs</h3><p>Drivers are selected with credential verification and trained in safe, courteous service.</p></div>
+      <div class="card"><div class="icon">📍</div><h3>GPS-Enabled Vehicles</h3><p>Vehicles are equipped with GPS tracking and monitoring for safety and operational visibility.</p></div>
+      <div class="card"><div class="icon">🚑</div><h3>Emergency Preparedness</h3><p>Chauffeurs receive training in the use of fire extinguishers and first-aid kits.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="container contact-grid">
+    <div><span class="eyebrow">CONTACT US</span><h2>Let's plan your next journey.</h2><p>Contact Amabze Rentals for corporate transportation, rentals, airport transfers, employee transportation, events and travel requirements across India.</p><div class="buttons" style="margin-top:24px"><a href="tel:+917982265845" class="btn btn-primary">Call Now</a><a href="mailto:reservation@amabzerentals.com" class="btn btn-outline">Email Us</a></div></div>
+    <div class="contact-box">
+      <div class="contact-item"><div>📍</div><div><strong>Office Address</strong><span>No-S 4, Leisure Valley Park, Huda Market, Sector-29, Opp. Kingdom of Dreams, Gurugram, Haryana - 122002, India</span></div></div>
+      <div class="contact-item"><div>📞</div><div><strong>Phone</strong><span>0124 4974856<br>+91 7982265845<br>+91 8826716382</span></div></div>
+      <div class="contact-item"><div>✉️</div><div><strong>Email</strong><span>reservation@amabzerentals.com</span></div></div>
+      <div class="contact-item"><div>🌐</div><div><strong>Website</strong><span>www.amabzerentals.com</span></div></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="container footer-row"><span>© 2026 Amabze Rentals Pvt. Ltd. All Rights Reserved.</span><span>Travel Safe With Us</span></div></footer>
+</body>
+</html>

@@ -1,0 +1,31 @@
+.button {
+  position: fixed;
+  bottom: var(--space-6);
+  right: var(--space-6);
+  z-index: var(--z-toast);
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--color-brand-600), var(--color-brand-700));
+  color: var(--color-white);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px -4px rgba(14, 90, 167, 0.4);
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.button:hover {
+  background: linear-gradient(135deg, var(--color-brand-700), var(--color-brand-800));
+}
+
+@media (max-width: 768px) {
+  .button {
+    bottom: var(--space-4);
+    right: var(--space-4);
+    width: 44px;
+    height: 44px;
+  }
+}
