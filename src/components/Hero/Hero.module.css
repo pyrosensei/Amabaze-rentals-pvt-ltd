@@ -1,0 +1,442 @@
+.heroSection {
+  background: var(--gradient-hero);
+  padding-top: var(--space-20);
+  padding-bottom: 0;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  color: var(--color-text-on-dark);
+}
+
+.ambientGlow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 45% at 75% 15%, rgba(184, 143, 77, 0.08), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 20% 85%, rgba(255, 255, 255, 0.03), transparent 70%);
+  pointer-events: none;
+}
+
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  align-items: center;
+  gap: var(--space-12);
+  position: relative;
+  z-index: 2;
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.eyebrowBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-6);
+  width: fit-content;
+  backdrop-filter: blur(8px);
+}
+
+.pulseLiveDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6);
+  animation: livePulse 2s infinite;
+}
+
+@keyframes livePulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+.eyebrowText {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-accent-300);
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  color: var(--color-white);
+  font-size: clamp(2.2rem, 4.2vw, 3.4rem);
+  line-height: 1.15;
+  margin-bottom: var(--space-6);
+  letter-spacing: -0.03em;
+}
+
+.accentGradient {
+  color: var(--color-accent-400);
+  display: inline;
+}
+
+.subtitle {
+  color: var(--color-neutral-400);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  margin-bottom: var(--space-8);
+  max-width: 580px;
+}
+
+.highlightPills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: var(--space-8);
+}
+
+.pillItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #E5E7EB;
+  backdrop-filter: blur(4px);
+}
+
+.pillIcon {
+  color: var(--color-accent-400);
+}
+
+.buttonGroup {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.primaryButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-accent-500);
+  color: #0C0D0E;
+  padding: 13px 26px;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 0.92rem;
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(184, 143, 77, 0.3);
+  transition: all var(--duration-fast);
+}
+
+.primaryButton:hover {
+  background: var(--color-accent-400);
+  box-shadow: 0 6px 22px rgba(184, 143, 77, 0.45);
+  color: #0C0D0E;
+}
+
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--color-white);
+  padding: 13px 24px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.92rem;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all var(--duration-fast);
+}
+
+.secondaryButton:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* ─── Right Column: Visual Stage with Floating Live HUD Cards ─── */
+.visualStage {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.carStageWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+}
+
+.carImageContainer {
+  position: relative;
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 24px 50px -12px rgba(0, 0, 0, 0.65);
+  background: #14171D;
+}
+
+.heroCarImage {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  display: block;
+}
+
+.carGradientOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(12, 13, 14, 0.04) 0%, rgba(12, 13, 14, 0.45) 100%);
+  pointer-events: none;
+}
+
+/* Floating Card 1: GPS Live Status (Top-Right of Image) */
+.floatingGpsBadge {
+  position: absolute;
+  top: -14px;
+  right: -16px;
+  background: rgba(18, 20, 24, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  padding: 10px 16px;
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.45);
+  z-index: 4;
+}
+
+.gpsIconWrap {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #10B981;
+  flex-shrink: 0;
+}
+
+/* Floating Card 2: 300+ Commercial Fleet (Bottom-Left of Image) */
+.floatingFleetBadge {
+  position: absolute;
+  bottom: -16px;
+  left: -16px;
+  background: rgba(18, 20, 24, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  padding: 10px 16px;
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.45);
+  z-index: 4;
+}
+
+.fleetIconWrap {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: rgba(184, 143, 77, 0.15);
+  border: 1px solid rgba(184, 143, 77, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent-400);
+  flex-shrink: 0;
+}
+
+.badgeInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.badgeTitle {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.2;
+}
+
+.badgeSub {
+  font-size: 0.72rem;
+  color: var(--color-neutral-400);
+  margin-top: 2px;
+  line-height: 1.2;
+}
+
+/* ─── Nationwide Standards Marquee Ribbon ─── */
+.marqueeSection {
+  margin-top: var(--space-16);
+  background: #08090A;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  z-index: 3;
+}
+
+.marqueeWrapper {
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.marqueeHeaderBadge {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 24px;
+  background: #111419;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--color-accent-300);
+  text-transform: uppercase;
+  z-index: 5;
+  white-space: nowrap;
+}
+
+.marqueeDotPulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-accent-400);
+}
+
+.marqueeTrackContainer {
+  flex-grow: 1;
+  overflow: hidden;
+  position: relative;
+  padding: 14px 0;
+  mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+}
+
+.marqueeTrack {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: scrollMarquee 32s linear infinite;
+  gap: var(--space-8);
+  will-change: transform;
+}
+
+.marqueeTrack:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scrollMarquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marqueeItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #D1D5DB;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* Single precise bullet dot */
+.marqueeBullet {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-accent-400);
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 980px) {
+  .container {
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+  }
+
+  .visualStage {
+    margin-top: var(--space-4);
+  }
+}
+
+@media (max-width: 640px) {
+  .heroSection {
+    padding-top: var(--space-12);
+  }
+
+  .floatingGpsBadge {
+    right: 8px;
+    top: -10px;
+    padding: 8px 12px;
+  }
+
+  .floatingFleetBadge {
+    left: 8px;
+    bottom: -10px;
+    padding: 8px 12px;
+  }
+
+  .badgeTitle {
+    font-size: 0.75rem;
+  }
+
+  .badgeSub {
+    font-size: 0.65rem;
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .marqueeHeaderBadge {
+    padding: 10px 14px;
+    font-size: 0.68rem;
+  }
+}

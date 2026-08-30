@@ -1,0 +1,207 @@
+.safetySection {
+  background-color: var(--color-surface-secondary);
+  padding: var(--space-20) 0;
+}
+
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: var(--space-16);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-accent-600);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-4);
+  padding: 6px 14px;
+  background-color: var(--color-accent-100);
+  border: 1px solid var(--color-accent-200);
+  border-radius: var(--radius-full);
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 3.2vw, 2.8rem);
+  font-weight: 800;
+  color: var(--color-neutral-900);
+  margin-bottom: var(--space-4);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  color: var(--color-neutral-600);
+  line-height: 1.6;
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-6);
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-5);
+  padding: var(--space-6);
+  background-color: var(--color-surface-primary);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-xl);
+  transition: all var(--duration-normal) var(--ease-out);
+  box-shadow: var(--shadow-xs);
+}
+
+.item:hover {
+  border-color: var(--color-accent-300);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.iconWrapper {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-lg);
+  background: var(--color-neutral-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast);
+}
+
+.item:hover .iconWrapper {
+  background: var(--color-neutral-900);
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  color: var(--color-neutral-900);
+  transition: all var(--duration-fast);
+}
+
+.item:hover .icon {
+  color: var(--color-accent-400);
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.itemTitle {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-neutral-900);
+  margin: 0;
+}
+
+.itemDescription {
+  color: var(--color-neutral-600);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .contentGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Standard In-Cabin Amenities Card ─── */
+.amenitiesCard {
+  margin-top: var(--space-12);
+  background: var(--color-surface-primary);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-sm);
+}
+
+.amenitiesHeader {
+  margin-bottom: var(--space-6);
+}
+
+.amenitiesBadge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--color-accent-700, #8A6425);
+  background: var(--color-accent-100);
+  border: 1px solid var(--color-accent-200);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  margin-bottom: 6px;
+}
+
+.amenitiesTitle {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--color-neutral-900);
+  margin: 0;
+}
+
+.amenitiesGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+}
+
+@media (max-width: 1024px) {
+  .amenitiesGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 580px) {
+  .amenitiesGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.amenityItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: var(--color-neutral-800);
+  background: var(--color-neutral-50, #F8FAFC);
+  border: 1px solid var(--color-border-subtle, #E2E8F0);
+  padding: 10px 14px;
+  border-radius: var(--radius-lg);
+}
+
+.amenityCheck {
+  color: #10B981;
+  font-weight: 900;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}

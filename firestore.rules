@@ -1,0 +1,16 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Public can create booking quote requests
+    match /quote_requests/{document} {
+      allow read, create: if true;
+      allow update, delete: if true;
+    }
+    
+    // Ops fleet metadata
+    match /fleet_status/{document} {
+      allow read: if true;
+      allow write: if true;
+    }
+  }
+}

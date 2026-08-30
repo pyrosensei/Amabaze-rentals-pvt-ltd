@@ -1,0 +1,150 @@
+.clientsSection {
+  background-color: var(--color-surface-primary);
+  padding: var(--space-20) 0;
+  overflow: hidden;
+  border-top: 1px solid var(--color-border-subtle);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: var(--space-12);
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-accent-600);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-4);
+  padding: 6px 14px;
+  background-color: var(--color-accent-100);
+  border: 1px solid var(--color-accent-200);
+  border-radius: var(--radius-full);
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 3.2vw, 2.8rem);
+  font-weight: 800;
+  color: var(--color-neutral-900);
+  margin-bottom: var(--space-4);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  color: var(--color-neutral-600);
+  line-height: 1.6;
+}
+
+/* Marquee Styles */
+.marqueeWrapper {
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-2) 0;
+}
+
+.marqueeTrack {
+  display: flex;
+  gap: var(--space-5);
+  width: max-content;
+  animation: marquee 35s linear infinite;
+}
+
+.marqueeWrapper:hover .marqueeTrack {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.clientCard {
+  flex-shrink: 0;
+}
+
+.clientBadge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  padding: 14px 28px;
+  min-width: 200px;
+  transition: all var(--duration-fast);
+}
+
+.clientBadge:hover {
+  background: #FFFFFF;
+  border-color: var(--color-neutral-900);
+  box-shadow: 0 4px 14px rgba(17, 24, 39, 0.08);
+  transform: translateY(-2px);
+}
+
+.clientName {
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--color-neutral-900);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.clientCategory {
+  font-size: 0.72rem;
+  color: var(--color-neutral-500);
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
+.fadeLeft,
+.fadeRight {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 120px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.fadeLeft {
+  left: 0;
+  background: linear-gradient(to right, var(--color-surface-primary), transparent);
+}
+
+.fadeRight {
+  right: 0;
+  background: linear-gradient(to left, var(--color-surface-primary), transparent);
+}
+
+@media (max-width: 640px) {
+  .clientsSection {
+    padding: var(--space-12) 0;
+  }
+  
+  .fadeLeft, .fadeRight {
+    width: 40px;
+  }
+}

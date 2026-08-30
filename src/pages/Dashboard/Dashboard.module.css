@@ -1,0 +1,647 @@
+.page {
+  min-height: 100vh;
+  background-color: var(--color-surface-secondary, #F8FAFC);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Minimal header ─── */
+.header {
+  background-color: #0F172A;
+  color: #FFFFFF;
+  border-bottom: 1px solid #1E293B;
+  position: sticky;
+  top: 0;
+  z-index: 900;
+}
+
+.headerInner {
+  max-width: var(--container-max, 1200px);
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logoImage {
+  height: 38px;
+  width: auto;
+  border-radius: 6px;
+}
+
+.brandName {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: #FFFFFF;
+  letter-spacing: 0.05em;
+  display: block;
+}
+
+.brandBadge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #B88F4D;
+  letter-spacing: 0.08em;
+}
+
+.headerDeskActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btnReload {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btnReload:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.btnLogout {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: #EF4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btnLogout:hover {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #94A3B8;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.backLink:hover {
+  color: #FFFFFF;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ─── Auth Gate Modal/Card ─── */
+.authContainer {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+.authCard {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 36px 32px;
+  max-width: 440px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+}
+
+.authIconBox {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: #0F172A;
+  color: #B88F4D;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px auto;
+}
+
+.authCard h2 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 8px;
+}
+
+.authCard p {
+  font-size: 0.84rem;
+  color: #64748B;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.authForm {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.authForm input {
+  padding: 12px 16px;
+  border: 1px solid #CBD5E1;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  outline: none;
+  text-align: center;
+  font-family: inherit;
+}
+
+.authForm input:focus {
+  border-color: #B88F4D;
+  box-shadow: 0 0 0 3px rgba(184, 143, 77, 0.15);
+}
+
+.authErrorText {
+  color: #EF4444;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.btnAuthSubmit {
+  background: #0F172A;
+  color: #FFFFFF;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s;
+}
+
+.btnAuthSubmit:hover:not(:disabled) {
+  background: #1E293B;
+}
+
+.authHint {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #F1F5F9;
+  font-size: 0.74rem;
+  color: #94A3B8;
+}
+
+/* ─── Main Content ─── */
+.main {
+  flex: 1;
+  width: 100%;
+  max-width: var(--container-max, 1200px);
+  margin: 0 auto;
+  padding: 32px 24px 80px 24px;
+}
+
+.pageIntro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.pageTitle {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 4px;
+}
+
+.pageSubtitle {
+  font-size: 0.9rem;
+  color: #64748B;
+}
+
+.dutyDeskCard {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: #475569;
+}
+
+.dutyDeskCard strong {
+  color: #0F172A;
+}
+
+.dutyDeskCard code {
+  color: #B88F4D;
+  font-weight: 700;
+}
+
+.section {
+  margin-bottom: 36px;
+}
+
+.sectionTitle {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 6px;
+}
+
+.sectionSub {
+  font-size: 0.82rem;
+  color: #64748B;
+  margin-bottom: 16px;
+}
+
+/* ─── Metrics ─── */
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .metricsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .metricsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.metricCard {
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.metricIcon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background-color: rgba(184, 143, 77, 0.12);
+  color: #8A6425;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.metricValue {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #0F172A;
+}
+
+.metricLabel {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #64748B;
+}
+
+/* ─── Fleet Grid ─── */
+.fleetGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 1024px) {
+  .fleetGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 540px) {
+  .fleetGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fleetCard {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.fleetCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.fleetIcon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background-color: #0F172A;
+  color: #B88F4D;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.availabilityBadge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background-color: rgba(16, 185, 129, 0.12);
+  color: #15803D;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.fleetName {
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 4px;
+}
+
+.fleetVehicles {
+  font-size: 0.78rem;
+  color: #64748B;
+  line-height: 1.4;
+}
+
+/* ─── Requests Table & Filter Controls ─── */
+.requestsHeaderRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.filterControls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 0.82rem;
+}
+
+.searchBox input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.82rem;
+  width: 180px;
+}
+
+.statusSelect {
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 0.82rem;
+  outline: none;
+  font-weight: 600;
+  color: #334155;
+}
+
+.requestsList {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.requestRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+  border-bottom: 1px solid #F1F5F9;
+  transition: background 0.15s;
+}
+
+.requestRow:hover {
+  background: #FAFAFA;
+}
+
+.requestRow:last-child {
+  border-bottom: none;
+}
+
+.requestMain {
+  flex: 1;
+  min-width: 0;
+}
+
+.requestTopBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+}
+
+.refTag {
+  font-family: monospace;
+  font-weight: 800;
+  font-size: 0.8rem;
+  background: #0F172A;
+  color: #FFFFFF;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.reqCompany {
+  font-weight: 800;
+  font-size: 0.92rem;
+  color: #0F172A;
+}
+
+.reqName {
+  font-size: 0.8rem;
+  color: #64748B;
+}
+
+.requestService {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #8A6425;
+  margin-bottom: 2px;
+}
+
+.requestRoute {
+  font-size: 0.8rem;
+  color: #475569;
+  line-height: 1.4;
+}
+
+.requestNotes {
+  margin-top: 6px;
+  font-size: 0.76rem;
+  color: #64748B;
+  background: #F8FAFC;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #E2E8F0;
+}
+
+.requestActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.btnDownloadPdf {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #0F172A;
+  color: #FFFFFF;
+  border: none;
+  padding: 7px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btnDownloadPdf:hover {
+  background: #1E293B;
+}
+
+.btnChatWa {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #DCFCE7;
+  color: #15803D;
+  border: 1px solid #BBF7D0;
+  padding: 7px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.btnChatWa:hover {
+  background: #BBF7D0;
+}
+
+.statusBadge {
+  padding: 7px 14px;
+  border-radius: 20px;
+  border: none;
+  font-size: 0.72rem;
+  font-weight: 800;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  transition: transform 0.15s;
+}
+
+.statusBadge:hover {
+  transform: translateY(-1px);
+}
+
+.status_new {
+  background-color: #FEF3C7;
+  color: #92400E;
+  border: 1px solid #FDE68A;
+}
+
+.status_contacted {
+  background-color: #DBEAFE;
+  color: #1E40AF;
+  border: 1px solid #BFDBFE;
+}
+
+.status_confirmed {
+  background-color: #DCFCE7;
+  color: #15803D;
+  border: 1px solid #BBF7D0;
+}
+
+.status_completed {
+  background-color: #F1F5F9;
+  color: #475569;
+  border: 1px solid #CBD5E1;
+}
+
+.emptyState {
+  padding: 32px;
+  text-align: center;
+  color: #94A3B8;
+  font-size: 0.85rem;
+}
+
+.loadingState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 60px 0;
+  color: #64748B;
+  font-size: 0.9rem;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

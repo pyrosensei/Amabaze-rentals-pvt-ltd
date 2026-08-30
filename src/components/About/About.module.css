@@ -1,0 +1,307 @@
+.aboutSection {
+  background-color: var(--color-surface-secondary);
+  padding: var(--space-20) 0;
+  position: relative;
+}
+
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+.sectionHeader {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto var(--space-14) auto;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-accent-600);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-4);
+  padding: 6px 14px;
+  background-color: var(--color-accent-100);
+  border: 1px solid var(--color-accent-200);
+  border-radius: var(--radius-full);
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 3.2vw, 2.8rem);
+  font-weight: 800;
+  color: var(--color-neutral-900);
+  margin-bottom: var(--space-4);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  color: var(--color-neutral-600);
+  line-height: 1.6;
+}
+
+.mainGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+  align-items: center;
+  margin-bottom: var(--space-16);
+}
+
+/* ─── Visual Column: Clean Aligned Dual Composition ─── */
+.imageColumn {
+  position: relative;
+  padding-bottom: 60px;
+  padding-right: 40px;
+}
+
+.mainImageCard {
+  position: relative;
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.12);
+  border: 1px solid var(--color-border-default);
+  background: var(--color-surface-primary);
+  width: 92%;
+}
+
+.mainImage {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  display: block;
+}
+
+.imageTag {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(18, 20, 24, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.tagDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent-400);
+}
+
+/* Floating Overlapping Card */
+.floatingImageCard {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 62%;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 3px solid #FFFFFF;
+  box-shadow: 0 20px 40px -8px rgba(0, 0, 0, 0.22);
+  background: #181B20;
+  z-index: 2;
+}
+
+.secondaryImage {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  display: block;
+}
+
+.secondaryImageOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(12, 13, 14, 0.85) 100%);
+  padding: 8px 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.statMini {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  color: #FFFFFF;
+}
+
+.statMini strong {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--color-accent-400);
+}
+
+.statMini span {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #E2E8F0;
+}
+
+/* ─── Narrative Column ─── */
+.narrativeColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.leadText {
+  font-size: 1.12rem;
+  font-weight: 600;
+  color: var(--color-neutral-900);
+  line-height: 1.6;
+}
+
+.highlightsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.highlightItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.94rem;
+  color: var(--color-neutral-700);
+  line-height: 1.5;
+}
+
+.highlightIcon {
+  color: #16A34A;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.quoteBox {
+  border-left: 3px solid var(--color-accent-500);
+  padding: var(--space-4) var(--space-5);
+  background: rgba(184, 143, 77, 0.06);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.quoteBox p {
+  font-style: italic;
+  color: var(--color-neutral-700);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.quoteAuthor {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-neutral-900);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ─── Pillars Grid ─── */
+.pillarsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+}
+
+.pillarCard {
+  background: var(--color-surface-primary);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  border: 1px solid var(--color-border-default);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+  transition: all var(--duration-fast);
+  display: flex;
+  flex-direction: column;
+}
+
+.pillarCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.09);
+  border-color: var(--color-accent-300);
+}
+
+.pillarIconWrapper {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-lg);
+  background: var(--color-neutral-100);
+  color: var(--color-neutral-900);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-4);
+  transition: all var(--duration-fast);
+}
+
+.pillarCard:hover .pillarIconWrapper {
+  background: var(--color-accent-100);
+  color: var(--color-accent-600);
+}
+
+.pillarTitle {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-neutral-900);
+  margin-bottom: var(--space-2);
+}
+
+.pillarDesc {
+  font-size: 0.85rem;
+  color: var(--color-neutral-600);
+  line-height: 1.5;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 1024px) {
+  .pillarsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .mainGrid {
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+  }
+
+  .imageColumn {
+    padding-bottom: 40px;
+    padding-right: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .pillarsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .aboutSection {
+    padding: var(--space-12) 0;
+  }
+
+  .floatingImageCard {
+    width: 75%;
+  }
+}

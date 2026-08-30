@@ -1,0 +1,8 @@
+{
+  "name": "Amabze Rentals",
+  "description": "Amabze Rentals Pvt Ltd - Professional corporate mobility, employee transport, airport transfers, and fleet leasing across India.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
