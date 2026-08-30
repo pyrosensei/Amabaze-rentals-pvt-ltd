@@ -1,55 +1,74 @@
-.floatBtn {
+.floatingContainer {
   position: fixed;
   bottom: 24px;
   left: 24px;
-  z-index: 998;
+  z-index: 990;
+  display: flex;
+  align-items: center;
+}
+
+.floatBtn {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 0;
   background: #25D366;
   color: #FFFFFF;
-  padding: 10px 18px 10px 12px;
+  padding: 6px;
   border-radius: 50px;
-  box-shadow: 0 10px 25px -4px rgba(37, 211, 102, 0.45), 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 25px -4px rgba(37, 211, 102, 0.4), 0 4px 10px rgba(0, 0, 0, 0.15);
   text-decoration: none;
   font-family: var(--font-body, sans-serif);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.01em;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  cursor: pointer;
 }
 
-.floatBtn:hover {
+.floatBtn:hover,
+.floatBtn:focus-visible {
   background: #20BA5A;
   color: #FFFFFF;
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 14px 30px -4px rgba(37, 211, 102, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px -4px rgba(37, 211, 102, 0.55);
 }
 
 .iconWrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .waIcon {
   color: #FFFFFF;
 }
 
+.labelWrapper {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding-left: 4px;
+  padding-right: 12px;
+}
+
 .waLabel {
   white-space: nowrap;
+  color: #FFFFFF;
 }
 
 @media (max-width: 640px) {
-  .waLabel {
-    display: none;
-  }
-  .floatBtn {
-    padding: 12px;
-    border-radius: 50%;
+  .floatingContainer {
     bottom: 20px;
     left: 20px;
+  }
+
+  .iconWrapper {
+    width: 34px;
+    height: 34px;
   }
 }

@@ -1,84 +1,84 @@
 .floatingContainer {
   position: fixed;
   bottom: 24px;
-  right: 24px;
-  z-index: var(--z-sticky);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: var(--space-3);
-  pointer-events: none;
-}
-
-.floatingContainer * {
-  pointer-events: auto;
-}
-
-.callBadge {
+  right: 80px; /* Leave space next to ScrollToTop button */
+  z-index: 990;
   display: flex;
   align-items: center;
-  gap: 8px;
-  background: #14171D;
-  color: var(--color-white);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 8px 14px;
-  border-radius: var(--radius-full);
-  font-size: 0.75rem;
-  font-weight: 700;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-  text-decoration: none;
-  transition: all var(--duration-fast);
 }
 
-.callBadge:hover {
-  background: #1F242D;
-  border-color: rgba(255, 255, 255, 0.3);
+.phonePill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  background: #0F172A;
+  color: #FFFFFF;
+  border: 1px solid rgba(184, 143, 77, 0.35);
+  padding: 6px;
+  border-radius: 50px;
+  box-shadow: 0 10px 25px -4px rgba(15, 23, 42, 0.4), 0 4px 10px rgba(0, 0, 0, 0.15);
+  text-decoration: none;
+  font-family: var(--font-body, sans-serif);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.phonePill:hover,
+.phonePill:focus-visible {
+  background: #1E293B;
+  border-color: #B88F4D;
   transform: translateY(-2px);
+  box-shadow: 0 14px 30px -4px rgba(184, 143, 77, 0.3);
 }
 
-.callIcon {
-  color: var(--color-accent-400);
-}
-
-.fabRow {
+.iconCircle {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(184, 143, 77, 0.15);
+  color: #B88F4D;
+  flex-shrink: 0;
+  transition: background 0.2s, color 0.2s;
 }
 
-.quoteFab {
+.phonePill:hover .iconCircle {
+  background: #B88F4D;
+  color: #0F172A;
+}
+
+.phoneIcon {
+  color: inherit;
+}
+
+.phoneLabelWrap {
+  overflow: hidden;
   display: flex;
   align-items: center;
-  gap: 8px;
-  background: var(--color-accent-500);
-  color: #0C0D0E;
-  padding: 12px 20px;
-  border-radius: var(--radius-full);
-  font-size: 0.88rem;
-  font-weight: 700;
-  box-shadow: 0 8px 24px rgba(184, 143, 77, 0.35);
-  text-decoration: none;
-  transition: all var(--duration-fast);
+  padding-left: 8px;
+  padding-right: 12px;
 }
 
-.quoteFab:hover {
-  background: var(--color-accent-400);
-  transform: scale(1.04);
+.phoneLabel {
+  white-space: nowrap;
+  font-family: var(--font-mono, monospace);
+  color: #FFFFFF;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   .floatingContainer {
-    bottom: 16px;
-    right: 16px;
+    bottom: 20px;
+    right: 70px;
   }
 
-  .callBadge {
-    font-size: 11px;
-    padding: 6px 12px;
-  }
-
-  .quoteFab {
-    font-size: 0.8rem;
-    padding: 10px 16px;
+  .iconCircle {
+    width: 34px;
+    height: 34px;
   }
 }

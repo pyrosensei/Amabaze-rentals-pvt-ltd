@@ -56,6 +56,57 @@
   line-height: 1.65;
 }
 
+/* Process 3-Step Card */
+.processCard {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: var(--radius-xl);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 4px 0;
+}
+
+.processStepItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.processStepNumber {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--color-neutral-900);
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.processStepText {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.processStepText strong {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--color-neutral-900);
+}
+
+.processStepText span {
+  font-size: 0.76rem;
+  color: var(--color-neutral-500);
+  line-height: 1.35;
+}
+
 /* Proposal summary card */
 .quoteSummaryCard {
   background: var(--color-neutral-900);
@@ -538,35 +589,82 @@
   line-height: 1.4;
 }
 
-.slaBadgeHighlight {
+.slaCard {
+  width: 100%;
+  max-width: 480px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 14px 16px;
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  background: #FFFBEB;
-  border: 1px solid #FDE68A;
-  color: #92400E;
-  padding: 12px 14px;
-  border-radius: var(--radius-md);
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+  margin: 4px 0 10px 0;
+}
+
+.slaHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.slaHeaderIcon {
+  color: #0284C7;
+  flex-shrink: 0;
+}
+
+.slaTitle {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #0F172A;
+  letter-spacing: -0.01em;
+}
+
+.slaNote {
+  margin: 0;
   font-size: 0.78rem;
   line-height: 1.45;
+  color: #64748B;
 }
 
-.slaIcon {
-  color: #D97706;
-  flex-shrink: 0;
-  margin-top: 2px;
+.slaHelplineRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-top: 4px;
 }
 
-.slaBadgeHighlight strong {
-  display: block;
-  color: #78350F;
-  margin-bottom: 3px;
-  font-size: 0.82rem;
+.slaPhoneChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: var(--font-mono, monospace);
+  color: #1E293B;
+  text-decoration: none;
+  transition: all 0.2s ease;
 }
 
-.slaBadgeHighlight p {
-  margin: 0;
-  color: #92400E;
+.slaPhoneChip:hover {
+  background: #0F172A;
+  color: #FFFFFF;
+  border-color: #0F172A;
+}
+
+.slaPhoneChip svg {
+  color: #64748B;
+  transition: color 0.2s ease;
+}
+
+.slaPhoneChip:hover svg {
+  color: #FFFFFF;
 }
 
 .successActionButtons {

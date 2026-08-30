@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useScrollReveal } from '../../hooks/useScrollReveal';
 import { submitQuoteRequest } from '../../services/api';
@@ -18,10 +18,10 @@ import {
   Users,
   Calendar,
   Building,
-  ShieldCheck,
   Clock,
   Download,
   MessageCircle,
+  FileText,
 } from 'lucide-react';
 import styles from './Contact.module.css';
 
@@ -35,11 +35,11 @@ const SERVICE_TYPES = [
 ];
 
 const TOTAL_STEPS = 3;
-const stepTitles = ['Service & Vehicle Type', 'Route & Schedule Details', 'Corporate Credentials'];
+const stepTitles = ['Service Category', 'Route & Schedule', 'Corporate Credentials'];
 const stepDescriptions = [
   'Select your transportation category or custom fleet requirement.',
-  'Provide trip locations and dates so we can calculate your proposal.',
-  'Where should our travel desk dispatch the official GST quotation?',
+  'Provide trip pickup, destination, date, and passenger count.',
+  'Enter your company and contact details to generate your proposal.',
 ];
 
 export default function Contact({ selectedVehicle }) {
@@ -65,10 +65,15 @@ export default function Contact({ selectedVehicle }) {
 
   useEffect(() => {
     if (selectedVehicle) {
-      if (selectedVehicle.id === 'sedans') setForm((f) => ({ ...f, serviceType: 'chauffeur-transfer', notes: `Requested Vehicle: ${selectedVehicle.name} (${selectedVehicle.vehicles})` }));
-      else if (selectedVehicle.id === 'suvs') setForm((f) => ({ ...f, serviceType: 'chauffeur-transfer', notes: `Requested Vehicle: ${selectedVehicle.name} (${selectedVehicle.vehicles})` }));
-      else if (selectedVehicle.id === 'travellers') setForm((f) => ({ ...f, serviceType: 'corporate-commute', notes: `Requested Vehicle: ${selectedVehicle.name} (${selectedVehicle.vehicles})` }));
-      else if (selectedVehicle.id === 'coaches') setForm((f) => ({ ...f, serviceType: 'event-logistics', notes: `Requested Vehicle: ${selectedVehicle.name} (${selectedVehicle.vehicles})` }));
+      if (selectedVehicle.id === 'sedans') {
+        setForm((f) => ({ ...f, serviceType: 'chauffeur-transfer', notes: `Requested Vehicle: ${selectedVehicle.name} (${selectedVehicle.vehicles})` }));
+      } else if (selectedVehicle.id === 'suvs') {
+        setForm((f) => ({ ...f, serviceType: 'chauffeur-transfer', notes: `Requested Vehicle: ${selectedVehicle.name} (${selectedVehicle.vehicles})` }));
+      } else if (selectedVehicle.id === 'travellers') {
+        setForm((f) => ({ ...f, serviceType: 'corporate-commute', notes: `Requested Vehicle: ${selectedVehicle.name} (${selectedVehicle.vehicles})` }));
+      } else if (selectedVehicle.id === 'coaches') {
+        setForm((f) => ({ ...f, serviceType: 'event-logistics', notes: `Requested Vehicle: ${selectedVehicle.name} (${selectedVehicle.vehicles})` }));
+      }
     }
   }, [selectedVehicle]);
 
@@ -90,7 +95,7 @@ export default function Contact({ selectedVehicle }) {
     }
     if (currentStep === 3) {
       if (!form.name.trim()) newErrors.name = 'Full name is required';
-      if (!form.email.trim()) newErrors.email = 'Email is required';
+      if (!form.email.trim()) newErrors.email = 'Official email is required';
       else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
         newErrors.email = 'Please enter a valid email address';
       }
@@ -128,13 +133,14 @@ export default function Contact({ selectedVehicle }) {
     try {
       const response = await submitQuoteRequest(form);
       setIsSubmitting(false);
-      setReferenceId(response?.reference_id || response?.referenceId || `AMB-2026-${(Math.random() * 89999 + 10000).toFixed(0)}`);
+      const generatedRef = response?.reference_id || response?.referenceId || `AMB-2026-${(Math.random() * 89999 + 10000).toFixed(0)}`;
+      setReferenceId(generatedRef);
       setSubmitted(true);
     } catch (error) {
       console.error('submitQuoteRequest failed:', error);
       setIsSubmitting(false);
       setSubmitError(
-        'We could not send your request right now. Please check your connection and try again.'
+        'We could not process your request right now. Please check your connection or contact our operations desk directly.'
       );
     }
   };
@@ -159,8 +165,6 @@ export default function Contact({ selectedVehicle }) {
     });
   };
 
-  const selectedServiceObj = SERVICE_TYPES.find((s) => s.id === form.serviceType) || SERVICE_TYPES[0];
-
   return (
     <motion.section
       ref={ref}
@@ -172,37 +176,48 @@ export default function Contact({ selectedVehicle }) {
     >
       <div className="container">
         <div className={styles.grid}>
-          {/* ── Left: Corporate Contact Info & Summary ── */}
+          {/* ── Left: Corporate Contact Info & Process Steps ── */}
           <div className={styles.info}>
             <span className={styles.eyebrow}>
-              <span>⚡</span> B2B QUOTE & RESERVATIONS
+              <span>📋</span> CORPORATE RESERVATIONS & PROPOSALS
             </span>
-            <h2>Let's Plan Your Corporate Fleet Journey</h2>
+            <h2>Request Official Fleet Quotation</h2>
             <p>
-              Contact Amabze Rentals for enterprise vehicle leasing, employee transit contracts, executive transfers, and pan-India event logistics.
+              Direct corporate billing, dedicated account managers, and verified chauffeur transit for enterprises across India.
             </p>
 
-            {/* Live proposal badge indicator */}
-            <div className={styles.quoteSummaryCard}>
-              <div className={styles.summaryHeader}>
-                <Clock size={16} className={styles.summaryIcon} />
-                <span>24/7 Corporate Response Window</span>
+            {/* Clear 3-Step Process Guide */}
+            <div className={styles.processCard}>
+              <div className={styles.processStepItem}>
+                <div className={styles.processStepNumber}>1</div>
+                <div className={styles.processStepText}>
+                  <strong>Fill Trip Details</strong>
+                  <span>Select vehicle class, route, and schedule</span>
+                </div>
               </div>
-              <p className={styles.summaryBody}>
-                Guaranteed quotation dispatch within <strong>15 minutes</strong> during business hours.
-              </p>
-              <div className={styles.summaryPill}>
-                <span>Selected: {selectedServiceObj.label}</span>
+              <div className={styles.processStepItem}>
+                <div className={styles.processStepNumber}>2</div>
+                <div className={styles.processStepText}>
+                  <strong>Get Quote & Reference</strong>
+                  <span>Registered in central dispatch with live tracking</span>
+                </div>
+              </div>
+              <div className={styles.processStepItem}>
+                <div className={styles.processStepNumber}>3</div>
+                <div className={styles.processStepText}>
+                  <strong>Download Official PDF</strong>
+                  <span>Instant letterhead estimate with full GST specifications</span>
+                </div>
               </div>
             </div>
 
             <div className={styles.contactMethods}>
               <div className={styles.contactItem}>
                 <div className={styles.contactIcon}>
-                  <MapPin size={18} />
+                  <MapPin size={17} />
                 </div>
                 <div className={styles.contactText}>
-                  <strong>Headquarters</strong>
+                  <strong>Corporate Headquarters</strong>
                   <span>
                     No-S 4, Leisure Valley Park, Huda Market, Sector-29, Gurugram, Haryana - 122002
                   </span>
@@ -211,10 +226,10 @@ export default function Contact({ selectedVehicle }) {
 
               <div className={styles.contactItem}>
                 <div className={styles.contactIcon}>
-                  <Phone size={18} />
+                  <Phone size={17} />
                 </div>
                 <div className={styles.contactText}>
-                  <strong>Direct Desk Phone</strong>
+                  <strong>Direct Desk Line</strong>
                   <span>
                     <a href="tel:01244974856">0124 497 4856</a> • <a href="tel:+917982265845">+91 7982 265 845</a>
                   </span>
@@ -223,7 +238,7 @@ export default function Contact({ selectedVehicle }) {
 
               <div className={styles.contactItem}>
                 <div className={styles.contactIcon}>
-                  <Mail size={18} />
+                  <Mail size={17} />
                 </div>
                 <div className={styles.contactText}>
                   <strong>Official Email</strong>
@@ -242,47 +257,52 @@ export default function Contact({ selectedVehicle }) {
                 <motion.div
                   key="success"
                   className={styles.successState}
-                  initial={{ opacity: 0, scale: 0.95 }}
+                  initial={{ opacity: 0, scale: 0.96 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
+                  exit={{ opacity: 0, scale: 0.96 }}
+                  transition={{ duration: 0.25 }}
                 >
                   <div className={styles.successIcon}>
                     <CheckCircle2 size={32} />
                   </div>
-                  <h3>Request Successfully Received</h3>
+                  <h3>Request Successfully Registered</h3>
+                  
                   <div className={styles.successBadge}>
                     <span>Booking Reference: <strong>{referenceId || 'AMB-2026-84920'}</strong></span>
                   </div>
+                  
                   <p className={styles.successMainText}>
-                    Thank you, <strong>{form.name || 'Valued Client'}</strong>. Your request has been registered in our centralized dispatch system.
+                    Thank you, <strong>{form.name || 'Valued Client'}</strong>. Your booking request has been logged in our central dispatch system.
                   </p>
 
-                  <div className={styles.successNotificationBox}>
-                    <div className={styles.notificationItem}>
-                      <span className={styles.notifDot} />
-                      <span>Request Dispatched to Amabze Desk: <code>reservation@amabzerentals.com</code></span>
+                  <div className={styles.slaCard}>
+                    <div className={styles.slaHeader}>
+                      <Clock size={16} className={styles.slaHeaderIcon} />
+                      <span className={styles.slaTitle}>Estimated Response: Within 2–3 Hours</span>
                     </div>
-                    <div className={styles.notificationItem}>
-                      <span className={styles.notifDot} />
-                      <span>Confirmation & Estimate Logged for: <code>{form.email || 'your email'}</code></span>
-                    </div>
-                    <div className={styles.slaBadgeHighlight}>
-                      <Clock size={16} className={styles.slaIcon} />
-                      <div>
-                        <strong>Our team is actively working on your request and will update you within 2–3 hours.</strong>
-                        <p>If you do not receive an update within 24 hours, or have an urgent query, please call our 24/7 desk directly at <strong>0124 4974856</strong> / <strong>+91 7982265845</strong>.</p>
-                      </div>
+                    <p className={styles.slaNote}>
+                      Our dispatch team is reviewing your route and vehicle requirements. If you have an urgent inquiry or require immediate dispatch:
+                    </p>
+                    <div className={styles.slaHelplineRow}>
+                      <a href="tel:01244974856" className={styles.slaPhoneChip}>
+                        <Phone size={12} />
+                        <span>0124 4974856</span>
+                      </a>
+                      <a href="tel:+917982265845" className={styles.slaPhoneChip}>
+                        <Phone size={12} />
+                        <span>+91 7982 265 845</span>
+                      </a>
                     </div>
                   </div>
 
-                  {/* PDF Download & Quick WhatsApp Dispatch */}
+                  {/* PDF Download & Minimal WhatsApp Dispatch */}
                   <div className={styles.successActionButtons}>
                     <button
                       type="button"
                       className={styles.btnPdfDownload}
                       onClick={() => generateQuotePDF({ ...form, reference_id: referenceId, referenceId })}
                     >
-                      <Download size={15} />
+                      <Download size={16} />
                       <span>Download Official PDF Quote</span>
                     </button>
 
@@ -294,8 +314,8 @@ export default function Contact({ selectedVehicle }) {
                       rel="noopener noreferrer"
                       className={styles.btnWhatsAppShare}
                     >
-                      <MessageCircle size={15} />
-                      <span>Send to WhatsApp Desk</span>
+                      <MessageCircle size={16} />
+                      <span>Share on WhatsApp</span>
                     </a>
                   </div>
 
@@ -376,7 +396,7 @@ export default function Contact({ selectedVehicle }) {
                           <input
                             id="destination"
                             type="text"
-                            placeholder="e.g. Connaught Place Delhi / Mumbai Hub / Local Daily Route"
+                            placeholder="e.g. Connaught Place Delhi / Jaipur / Local Daily Route"
                             value={form.destination}
                             onChange={(e) => update('destination', e.target.value)}
                           />
@@ -436,11 +456,11 @@ export default function Contact({ selectedVehicle }) {
                           </div>
 
                           <div className={styles.fieldGroup}>
-                            <label htmlFor="company">Organization / Company</label>
+                            <label htmlFor="company">Company / Organization</label>
                             <input
                               id="company"
                               type="text"
-                              placeholder="e.g. Samsung / Corporate Admin Desk"
+                              placeholder="e.g. Corporate Admin Desk"
                               value={form.company}
                               onChange={(e) => update('company', e.target.value)}
                             />
@@ -500,7 +520,7 @@ export default function Contact({ selectedVehicle }) {
                     </div>
                   )}
 
-                  {/* Actions Bar */}
+                  {/* Actions Bar with Dedicated "Get Quote & PDF" CTA */}
                   <div className={styles.formActions}>
                     {step > 1 ? (
                       <button type="button" className={styles.btnBack} onClick={handleBack}>
@@ -518,7 +538,7 @@ export default function Contact({ selectedVehicle }) {
                         onClick={handleNext}
                         disabled={!canProceed}
                       >
-                        <span>Continue to Route</span>
+                        <span>{step === 1 ? 'Continue to Route' : 'Continue to Details'}</span>
                         <ArrowRight size={15} />
                       </button>
                     ) : (
@@ -531,12 +551,12 @@ export default function Contact({ selectedVehicle }) {
                         {isSubmitting ? (
                           <>
                             <Loader2 size={16} className={styles.spinner} />
-                            <span>Generating Proposal...</span>
+                            <span>Processing Proposal & PDF...</span>
                           </>
                         ) : (
                           <>
-                            <span>Request Official Proposal</span>
-                            <ShieldCheck size={16} />
+                            <span>Get Quote & PDF</span>
+                            <FileText size={16} />
                           </>
                         )}
                       </button>

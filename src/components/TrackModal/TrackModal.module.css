@@ -1,9 +1,10 @@
 .backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(10, 15, 25, 0.75);
+  background: rgba(15, 23, 42, 0.75);
   backdrop-filter: blur(8px);
-  z-index: 9999;
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 999999;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,58 +16,85 @@
   border: 1px solid #E2E8F0;
   border-radius: 20px;
   width: 100%;
-  max-width: 540px;
-  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.35);
+  max-width: 520px;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4);
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  position: relative;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
 }
 
 .modalHeader {
-  padding: 20px 24px;
+  padding: 18px 22px;
   background: #0F172A;
   color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid #1E293B;
+}
+
+.headerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.headerTagRow {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.shieldIcon {
+  color: #B88F4D;
 }
 
 .tag {
-  display: inline-block;
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.08em;
   color: #B88F4D;
-  margin-bottom: 4px;
 }
 
 .headerLeft h3 {
   margin: 0;
-  font-size: 1.15rem;
+  font-size: 1.12rem;
   font-weight: 700;
   color: #FFFFFF;
 }
 
 .closeBtn {
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: #FFFFFF;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s;
+  flex-shrink: 0;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .closeBtn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(239, 68, 68, 0.85);
+  border-color: #EF4444;
+  color: #FFFFFF;
+  transform: scale(1.06);
+}
+
+.closeBtn:active {
+  transform: scale(0.95);
 }
 
 .searchForm {
-  padding: 20px 24px 12px 24px;
+  padding: 18px 22px 10px 22px;
 }
 
 .inputWrapper {
@@ -74,15 +102,16 @@
   align-items: center;
   gap: 8px;
   background: #F8FAFC;
-  border: 1px solid #CBD5E1;
+  border: 1.5px solid #CBD5E1;
   border-radius: 12px;
   padding: 6px 8px 6px 14px;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .inputWrapper:focus-within {
   border-color: #B88F4D;
-  box-shadow: 0 0 0 3px rgba(184, 143, 77, 0.15);
+  background: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(184, 143, 77, 0.18);
 }
 
 .searchIcon {
@@ -95,9 +124,15 @@
   border: none;
   background: transparent;
   outline: none;
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-size: 0.88rem;
+  font-weight: 600;
   color: #0F172A;
+  font-family: inherit;
+}
+
+.inputWrapper input::placeholder {
+  color: #94A3B8;
+  font-weight: 400;
 }
 
 .btnSearch {
@@ -106,7 +141,7 @@
   border: none;
   padding: 8px 18px;
   border-radius: 8px;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 700;
   cursor: pointer;
   transition: background 0.2s;
@@ -131,23 +166,27 @@
 }
 
 .errorBox {
-  margin: 0 24px 16px 24px;
-  padding: 12px 16px;
+  margin: 0 22px 14px 22px;
+  padding: 12px 14px;
   background: #FEF2F2;
   border: 1px solid #FCA5A5;
   border-radius: 10px;
   color: #B91C1C;
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
+.errorIcon {
+  flex-shrink: 0;
+}
+
 .resultContainer {
-  padding: 0 24px 20px 24px;
+  padding: 0 22px 18px 22px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
 .statusBarRow {
@@ -156,27 +195,29 @@
   justify-content: space-between;
   padding-bottom: 12px;
   border-bottom: 1px solid #F1F5F9;
+  gap: 8px;
 }
 
 .resRef {
   display: block;
   font-family: monospace;
   font-weight: 800;
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: #0F172A;
 }
 
 .resClient {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: #64748B;
 }
 
 .statusPill {
-  padding: 5px 12px;
+  padding: 4px 10px;
   border-radius: 20px;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.04em;
+  text-align: center;
 }
 
 .statusNew {
@@ -220,20 +261,20 @@
 }
 
 .timelineStepActive .timelineDot {
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
   background: #10B981;
   box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
 }
 
 .timelineStepActive strong {
-  font-size: 0.75rem;
+  font-size: 0.74rem;
   color: #0F172A;
 }
 
 .timelineStepActive p {
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   color: #64748B;
   margin: 0;
 }
@@ -242,7 +283,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  opacity: 0.5;
+  opacity: 0.45;
 }
 
 .timelineStepPending .timelineDot {
@@ -253,12 +294,12 @@
 }
 
 .timelineStepPending strong {
-  font-size: 0.75rem;
+  font-size: 0.74rem;
   color: #475569;
 }
 
 .timelineStepPending p {
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   color: #94A3B8;
   margin: 0;
 }
@@ -273,7 +314,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: #334155;
   background: #F8FAFC;
   padding: 8px 10px;
@@ -281,27 +322,37 @@
   border: 1px solid #F1F5F9;
 }
 
+.detailItem svg {
+  color: #B88F4D;
+  flex-shrink: 0;
+}
+
 .slaBox {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #FFFBEB;
-  border: 1px solid #FDE68A;
-  color: #92400E;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  color: #475569;
   padding: 10px 12px;
   border-radius: 8px;
   font-size: 0.76rem;
   line-height: 1.4;
 }
 
+.slaIcon {
+  color: #0284C7;
+  flex-shrink: 0;
+}
+
 .modalFooter {
   background: #F8FAFC;
   border-top: 1px solid #E2E8F0;
-  padding: 12px 24px;
+  padding: 12px 22px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: #64748B;
   flex-wrap: wrap;
   gap: 8px;
@@ -317,11 +368,17 @@
   border-radius: 6px;
   font-weight: 700;
   text-decoration: none;
-  font-size: 0.75rem;
+  font-size: 0.74rem;
   transition: background 0.2s;
 }
 
 .callHotline:hover {
   background: #1E293B;
   color: #FFFFFF;
+}
+
+@media (max-width: 480px) {
+  .detailsGrid {
+    grid-template-columns: 1fr;
+  }
 }
