@@ -46,6 +46,10 @@
   line-height: 1.2;
 }
 
+.statValueNum {
+  font-variant-numeric: tabular-nums;
+}
+
 .statLabel {
   color: var(--color-text-secondary);
   font-size: var(--text-sm);

@@ -46,6 +46,7 @@ const Safety = () => {
   return (
     <motion.section
       ref={ref}
+      id="safety"
       className={styles.safetySection}
       initial={{ opacity: 0, y: 30 }}
       animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
@@ -88,7 +89,7 @@ const Safety = () => {
           className={styles.contentGrid}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.3, staggerChildren: 0.1 }}
+          transition={{ delay: 0.3 }}
         >
           <motion.div className={styles.column}>
             {safetyItems.map((item, index) => {

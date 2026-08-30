@@ -51,6 +51,7 @@ const Services = () => {
   return (
     <motion.section
       ref={ref}
+      id="services"
       className={styles.servicesSection}
       initial={{ opacity: 0, y: 30 }}
       animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
@@ -93,7 +94,7 @@ const Services = () => {
           className={styles.grid}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.3, staggerChildren: 0.1 }}
+          transition={{ delay: 0.3 }}
         >
           {servicesData.map((service, index) => {
             const Icon = service.icon;
@@ -128,7 +129,8 @@ const Services = () => {
                 >
                   {service.description}
                 </motion.p>
-                <motion.div
+                <motion.a
+                  href="#contact"
                   className={styles.cardLink}
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -137,7 +139,7 @@ const Services = () => {
                 >
                   <span>Learn more</span>
                   <ArrowRight size={16} className={styles.linkIcon} />
-                </motion.div>
+                </motion.a>
               </motion.div>
             );
           })}

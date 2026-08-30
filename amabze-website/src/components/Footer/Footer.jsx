@@ -60,7 +60,7 @@ export default function Footer() {
           className={styles.grid}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ staggerChildren: 0.1, delay: 0.2 }}
+          transition={{ delay: 0.2 }}
         >
           {/* Column 1: Company Info */}
           <motion.div className={styles.column}>

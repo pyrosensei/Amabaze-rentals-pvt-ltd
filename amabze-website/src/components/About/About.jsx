@@ -4,6 +4,7 @@ import { useScrollReveal } from '../../hooks/useScrollReveal';
 import { Check } from 'lucide-react';
 import styles from './About.module.css';
 import coachInterior from '../../assets/coach-interior.png';
+import aboutCar from '../../assets/about-car.jpg';
 
 const features = [
   'Pan-India service network',
@@ -65,7 +66,7 @@ export default function About() {
           className={styles.contentGrid}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.4, staggerChildren: 0.1 }}
+          transition={{ delay: 0.4 }}
         >
           <motion.div className={styles.imageColumn}>
             <motion.div
@@ -87,6 +88,19 @@ export default function About() {
             >
               <span className={styles.badgeNumber}>300+</span>
               <span className={styles.badgeLabel}>Vehicles</span>
+            </motion.div>
+            <motion.div
+              className={styles.secondaryImageCard}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+            >
+              <img
+                src={aboutCar}
+                alt="Chauffeur drills a corporate fleet car"
+                loading="lazy"
+                className={styles.secondaryImage}
+              />
             </motion.div>
           </motion.div>
 
@@ -118,7 +132,7 @@ export default function About() {
               className={styles.featuresGrid}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ staggerChildren: 0.08, delay: 0.3 }}
+              transition={{ delay: 0.3 }}
             >
               {features.map((feature, index) => (
                 <motion.div

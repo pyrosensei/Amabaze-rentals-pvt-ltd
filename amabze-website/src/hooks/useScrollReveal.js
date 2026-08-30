@@ -34,38 +34,3 @@ export function useScrollReveal(options = {}) {
 
   return [elementRef, isVisible];
 }
-
-export function useStaggeredReveal(itemCount, options = {}) {
-  const [visibleItems, setVisibleItems] = useState(new Set());
-  const elementRef = useRef(null);
-  const {
-    threshold = 0.1,
-    rootMargin = '0px 0px -50px 0px',
-    staggerDelay = 100
-  } = options;
-
-  useEffect(() => {
-    const element = elementRef.current;
-    if (!element) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          // Stagger the reveal of each item
-          for (let i = 0; i < itemCount; i++) {
-            setTimeout(() => {
-              setVisibleItems(prev => new Set([...prev, i]));
-            }, i * staggerDelay);
-          }
-          observer.unobserve(element);
-        }
-      },
-      { threshold, rootMargin }
-    );
-
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, [threshold, rootMargin, staggerDelay, itemCount]);
-
-  return [elementRef, visibleItems];
-}
