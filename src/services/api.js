@@ -1,5 +1,3 @@
-import { db } from '../lib/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 
@@ -106,39 +104,14 @@ export async function submitQuoteRequest(formData) {
     notes: formData.notes,
   };
 
-  // 1. First attempt to submit to Express Backend
-  let backendResult = null;
+  // Submit to Express Backend (which now handles Firestore persistence and Email dispatch)
   try {
-    backendResult = await request(ENDPOINTS.quoteRequests, {
+    return await request(ENDPOINTS.quoteRequests, {
       method: 'POST',
       body: JSON.stringify(payload),
     });
   } catch (error) {
-    console.warn('Express submit error, falling back:', error);
+    console.error('Failed to submit quote request:', error);
+    throw error;
   }
-
-  // 2. Mirror into Firestore cloud persistence
-  try {
-    if (db) {
-      await addDoc(collection(db, 'quote_requests'), {
-        ...payload,
-        reference_id: backendResult?.reference_id || backendResult?.referenceId || `AMB-2026-${Math.floor(10000 + Math.random() * 90000)}`,
-        status: 'new',
-        createdAt: serverTimestamp(),
-      });
-    }
-  } catch (firestoreErr) {
-    console.warn('Firestore cloud sync note:', firestoreErr);
-  }
-
-  if (backendResult) return backendResult;
-
-  // Fallback if local offline
-  const randomRef = `AMB-2026-${Math.floor(10000 + Math.random() * 90000)}`;
-  return {
-    reference_id: randomRef,
-    referenceId: randomRef,
-    status: 'new',
-    message: 'Your request has been received. Our team is actively reviewing your requirements and will update you within 2–3 hours.',
-  };
 }

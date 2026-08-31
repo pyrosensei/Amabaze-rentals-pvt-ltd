@@ -1,126 +1,35 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
-import fs from 'fs';
 import nodemailer from 'nodemailer';
-import { createServer as createViteServer } from 'vite';
+
+// --- Firebase Client SDK for Backend Storage ---
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, getDoc, query, orderBy } from 'firebase/firestore';
+import fs from 'fs';
+
+// Read Firebase Config
+let firebaseConfig: any = null;
+try {
+  const configPath = path.join(process.cwd(), 'firebase-applet-config.json');
+  if (fs.existsSync(configPath)) {
+    firebaseConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+  }
+} catch (e) {
+  console.warn('⚠️ No firebase-applet-config.json found.');
+}
+
+const firebaseApp = firebaseConfig ? initializeApp(firebaseConfig) : null;
+const db = firebaseApp && firebaseConfig?.firestoreDatabaseId 
+  ? getFirestore(firebaseApp, firebaseConfig.firestoreDatabaseId)
+  : (firebaseApp ? getFirestore(firebaseApp) : null);
 
 const app = express();
-const PORT = 3000;
+const PORT = Number(process.env.PORT) || 3000;
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Persistent Data Storage setup (Local storage fallback + Firestore mirror)
-const DATA_DIR = path.join(process.cwd(), 'data');
-const DB_FILE = path.join(DATA_DIR, 'quote-requests.json');
-
-function initDatabase() {
-  if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
-  }
-
-  if (!fs.existsSync(DB_FILE)) {
-    const seedData = [
-      {
-        id: 101,
-        reference_id: 'AMB-2026-10101',
-        service_type: 'corporate-commute',
-        pickup: 'Cyber City, DLF Phase 2, Gurugram',
-        destination: 'Sector 62, Noida (Daily Shift Route)',
-        date: '2026-08-30',
-        passengers: '16-30',
-        name: 'Amitabh Sharma',
-        company: 'Samsung Hospitality India Pvt Ltd',
-        email: 'travel.desk@samsung-partner.in',
-        phone: '+91 98102 34567',
-        notes: 'Monthly corporate employee transfer contract for 2 shifts (8 AM & 8 PM). Require Euro VI buses with GPS & SOS.',
-        status: 'confirmed',
-        created_at: new Date(Date.now() - 1000 * 60 * 60 * 18).toISOString(),
-        notification_status: {
-          company_email_sent: true,
-          company_email_recipient: 'reservation@amabzerentals.com',
-          user_email_sent: true,
-          user_email_recipient: 'travel.desk@samsung-partner.in',
-          user_notification_message: 'Your request has been received. Our team is actively reviewing your requirements and will update you within 2-3 hours.',
-          response_sla_hours: 24,
-        },
-      },
-      {
-        id: 102,
-        reference_id: 'AMB-2026-10102',
-        service_type: 'chauffeur-transfer',
-        pickup: 'Aerocity, IGI Airport Area, New Delhi',
-        destination: 'DLF Horizon Center, Golf Course Road, Gurugram',
-        date: '2026-08-31',
-        passengers: '1-4',
-        name: 'Mahesh Kapoor',
-        company: 'Michael Page India',
-        email: 'm.kapoor@michaelpage.co.in',
-        phone: '+91 99100 88234',
-        notes: 'Executive chauffeur-driven sedan (Toyota Camry or Mercedes E-Class) for visiting global director.',
-        status: 'contacted',
-        created_at: new Date(Date.now() - 1000 * 60 * 60 * 6).toISOString(),
-        notification_status: {
-          company_email_sent: true,
-          company_email_recipient: 'reservation@amabzerentals.com',
-          user_email_sent: true,
-          user_email_recipient: 'm.kapoor@michaelpage.co.in',
-          user_notification_message: 'Your request has been received. Our team is actively reviewing your requirements and will update you within 2-3 hours.',
-          response_sla_hours: 24,
-        },
-      },
-      {
-        id: 103,
-        reference_id: 'AMB-2026-10103',
-        service_type: 'event-logistics',
-        pickup: 'Leisure Valley Ground / Sector 29, Gurugram',
-        destination: 'Bharat Mandapam (IECC), Pragati Maidan, New Delhi',
-        date: '2026-09-04',
-        passengers: '30+',
-        name: 'Pooja Verma',
-        company: 'Wizcraft Entertainment Agency',
-        email: 'pooja.v@wizcraftevents.com',
-        phone: '+91 97170 99881',
-        notes: 'Fleet of 3 luxury multi-axle Volvo coaches with on-site dispatcher coordination for annual corporate summit.',
-        status: 'new',
-        created_at: new Date(Date.now() - 1000 * 60 * 45).toISOString(),
-        notification_status: {
-          company_email_sent: true,
-          company_email_recipient: 'reservation@amabzerentals.com',
-          user_email_sent: true,
-          user_email_recipient: 'pooja.v@wizcraftevents.com',
-          user_notification_message: 'Your request has been received. Our team is actively reviewing your requirements and will update you within 2-3 hours.',
-          response_sla_hours: 24,
-        },
-      },
-    ];
-    fs.writeFileSync(DB_FILE, JSON.stringify(seedData, null, 2), 'utf-8');
-  }
-}
-
-function getRequests() {
-  try {
-    initDatabase();
-    const raw = fs.readFileSync(DB_FILE, 'utf-8');
-    return JSON.parse(raw);
-  } catch (err) {
-    console.error('Error reading DB_FILE:', err);
-    return [];
-  }
-}
-
-function saveRequests(list: any[]) {
-  try {
-    initDatabase();
-    fs.writeFileSync(DB_FILE, JSON.stringify(list, null, 2), 'utf-8');
-    return true;
-  } catch (err) {
-    console.error('Error writing DB_FILE:', err);
-    return false;
-  }
-}
 
 // ─── Free Google Workspace / SMTP Email Dispatcher ───
 async function sendBookingEmails(booking: any) {
@@ -231,14 +140,20 @@ async function sendBookingEmails(booking: any) {
 // ─── Ops Dashboard Auth Middleware (Passcode Protection) ───
 function adminAuthMiddleware(req: express.Request, res: express.Response, next: express.NextFunction) {
   const authHeader = req.headers.authorization;
-  const adminSecret = process.env.ADMIN_PASSCODE || 'amabze2026';
+  const adminSecret = process.env.ADMIN_PASSCODE;
+
+  if (!adminSecret) {
+    return res.status(500).json({ error: 'Server Configuration Error: ADMIN_PASSCODE environment variable is missing.' });
+  }
 
   if (!authHeader) {
-    return res.status(401).json({ error: 'Unauthorized: Admin authentication token or passcode required' });
+    return res.status(401).json({ error: 'Unauthorized: Admin authentication token required' });
   }
 
   const token = authHeader.replace(/^Bearer\s+/i, '').trim();
-  if (token === adminSecret || token === 'admin_token_active') {
+  
+  // Validate token directly against the secret
+  if (token === adminSecret) {
     return next();
   }
 
@@ -262,12 +177,16 @@ app.get('/api/health', (req, res) => {
 // Admin Auth Verification
 app.post('/api/auth/login', (req, res) => {
   const { passcode, username } = req.body;
-  const adminSecret = process.env.ADMIN_PASSCODE || 'amabze2026';
+  const adminSecret = process.env.ADMIN_PASSCODE;
 
-  if (passcode === adminSecret || passcode === 'admin123' || passcode === 'amabze2026') {
+  if (!adminSecret) {
+    return res.status(500).json({ success: false, error: 'Server Error: ADMIN_PASSCODE is missing in environment variables.' });
+  }
+
+  if (passcode === adminSecret) {
     return res.json({
       success: true,
-      token: 'admin_token_active',
+      token: adminSecret,
       user: {
         username: username || 'Operations Desk',
         role: 'admin',
@@ -326,107 +245,133 @@ app.get('/api/fleet', (req, res) => {
 });
 
 // Public Track Booking by Reference ID ( AMB-2026-XXXXX )
-app.get('/api/track/:referenceId', (req, res) => {
-  const ref = req.params.referenceId?.trim().toUpperCase();
-  const list = getRequests();
-  const found = list.find((r: any) => r.reference_id?.toUpperCase() === ref);
+app.get('/api/track/:referenceId', async (req, res) => {
+  try {
+    const ref = req.params.referenceId?.trim().toUpperCase();
+    const q = query(collection(db, 'quote_requests'));
+    const snapshot = await getDocs(q);
+    const found = snapshot.docs.map(d => d.data()).find((r: any) => r.reference_id?.toUpperCase() === ref);
 
-  if (!found) {
-    return res.status(404).json({
-      error: `No booking found for reference ID ${ref}. Please check the code or contact 0124 4974856.`,
+    if (!found) {
+      return res.status(404).json({
+        error: `No booking found for reference ID ${ref}. Please check the code or contact 0124 4974856.`,
+      });
+    }
+
+    res.json({
+      reference_id: found.reference_id,
+      status: found.status,
+      service_type: found.service_type,
+      pickup: found.pickup,
+      destination: found.destination,
+      date: found.date,
+      passengers: found.passengers,
+      name: found.name,
+      company: found.company,
+      created_at: found.created_at || found.createdAt,
+      sla_notice: 'Our operations team is actively processing your booking request and will update you within 2-3 hours.',
+      contact_hotlines: ['0124 4974856', '+91 7982265845', '+91 8826716382'],
     });
+  } catch (error) {
+    console.error('Track error:', error);
+    res.status(500).json({ error: 'Failed to retrieve booking data' });
   }
-
-  res.json({
-    reference_id: found.reference_id,
-    status: found.status,
-    service_type: found.service_type,
-    pickup: found.pickup,
-    destination: found.destination,
-    date: found.date,
-    passengers: found.passengers,
-    name: found.name,
-    company: found.company,
-    created_at: found.created_at,
-    sla_notice: 'Our operations team is actively processing your booking request and will update you within 2-3 hours.',
-    contact_hotlines: ['0124 4974856', '+91 7982265845', '+91 8826716382'],
-  });
 });
 
 // Dashboard Analytics & Metrics (Protected)
-app.get('/api/dashboard/stats', (req, res) => {
-  const requests = getRequests();
-  const now = Date.now();
-  const sevenDaysAgo = now - 7 * 24 * 60 * 60 * 1000;
-  const requests7d = requests.filter((r: any) => new Date(r.created_at).getTime() >= sevenDaysAgo).length;
+app.get('/api/dashboard/stats', adminAuthMiddleware, async (req, res) => {
+  try {
+    const snapshot = await getDocs(collection(db, 'quote_requests'));
+    const requests = snapshot.docs.map(d => d.data());
+    const now = Date.now();
+    const sevenDaysAgo = now - 7 * 24 * 60 * 60 * 1000;
+    const requests7d = requests.filter((r: any) => new Date(r.created_at || r.createdAt).getTime() >= sevenDaysAgo).length;
 
-  res.json({
-    quote_requests_7d: requests7d || requests.length,
-    total_lifetime_requests: requests.length,
-    active_fleet: 300,
-    available_fleet: 100,
-    avg_response_hours: '0.25 (15 mins)',
-    sla_compliance_pct: '99.4%',
-    pending_dispatch: requests.filter((r: any) => r.status === 'new').length,
-    confirmed_trips: requests.filter((r: any) => r.status === 'confirmed').length,
-  });
+    res.json({
+      quote_requests_7d: requests7d || requests.length,
+      total_lifetime_requests: requests.length,
+      active_fleet: 300,
+      available_fleet: 100,
+      avg_response_hours: '0.25 (15 mins)',
+      sla_compliance_pct: '99.4%',
+      pending_dispatch: requests.filter((r: any) => r.status === 'new').length,
+      confirmed_trips: requests.filter((r: any) => r.status === 'confirmed').length,
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve stats' });
+  }
 });
 
 // Get Quote Requests / Bookings (Ops Desk)
-app.get('/api/quote-requests', (req, res) => {
-  const { status, search } = req.query;
-  let list = getRequests();
+app.get('/api/quote-requests', adminAuthMiddleware, async (req, res) => {
+  try {
+    const { status, search } = req.query;
+    const snapshot = await getDocs(collection(db, 'quote_requests'));
+    let list = snapshot.docs.map(d => ({ docId: d.id, ...d.data() }));
 
-  if (status && typeof status === 'string' && status !== 'all') {
-    list = list.filter((r: any) => r.status === status);
+    if (status && typeof status === 'string' && status !== 'all') {
+      list = list.filter((r: any) => r.status === status);
+    }
+
+    if (search && typeof search === 'string') {
+      const q = search.toLowerCase();
+      list = list.filter(
+        (r: any) =>
+          r.name?.toLowerCase().includes(q) ||
+          r.company?.toLowerCase().includes(q) ||
+          r.email?.toLowerCase().includes(q) ||
+          r.phone?.toLowerCase().includes(q) ||
+          r.pickup?.toLowerCase().includes(q) ||
+          r.destination?.toLowerCase().includes(q) ||
+          r.reference_id?.toLowerCase().includes(q)
+      );
+    }
+
+    list.sort((a: any, b: any) => new Date(b.created_at || b.createdAt).getTime() - new Date(a.created_at || a.createdAt).getTime());
+    res.json(list);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve quote requests' });
   }
-
-  if (search && typeof search === 'string') {
-    const q = search.toLowerCase();
-    list = list.filter(
-      (r: any) =>
-        r.name?.toLowerCase().includes(q) ||
-        r.company?.toLowerCase().includes(q) ||
-        r.email?.toLowerCase().includes(q) ||
-        r.phone?.toLowerCase().includes(q) ||
-        r.pickup?.toLowerCase().includes(q) ||
-        r.destination?.toLowerCase().includes(q) ||
-        r.reference_id?.toLowerCase().includes(q)
-    );
-  }
-
-  list.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-  res.json(list);
 });
 
 // Alias: /api/bookings
-app.get('/api/bookings', (req, res) => {
-  const list = getRequests();
-  list.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-  res.json(list);
+app.get('/api/bookings', adminAuthMiddleware, async (req, res) => {
+  try {
+    const snapshot = await getDocs(collection(db, 'quote_requests'));
+    let list = snapshot.docs.map(d => ({ docId: d.id, ...d.data() }));
+    list.sort((a: any, b: any) => new Date(b.created_at || b.createdAt).getTime() - new Date(a.created_at || a.createdAt).getTime());
+    res.json(list);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve bookings' });
+  }
 });
 
 // Update Request Status
-app.patch('/api/quote-requests/:id/status', (req, res) => {
-  const id = Number(req.params.id) || req.params.id;
-  const { status } = req.body;
+app.patch('/api/quote-requests/:id/status', adminAuthMiddleware, async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { status } = req.body;
 
-  if (!status) {
-    return res.status(400).json({ error: 'Status is required' });
+    if (!status) {
+      return res.status(400).json({ error: 'Status is required' });
+    }
+
+    const snapshot = await getDocs(collection(db, 'quote_requests'));
+    const docToUpdate = snapshot.docs.find(d => d.id === id || d.data().reference_id === id);
+
+    if (!docToUpdate) {
+      return res.status(404).json({ error: 'Booking request not found' });
+    }
+
+    await updateDoc(doc(db, 'quote_requests', docToUpdate.id), {
+      status,
+      updated_at: new Date().toISOString()
+    });
+
+    res.json({ success: true, request: { ...docToUpdate.data(), status } });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update request' });
   }
-
-  const list = getRequests();
-  const index = list.findIndex((r: any) => r.id == id || r.reference_id == id);
-
-  if (index === -1) {
-    return res.status(404).json({ error: 'Booking request not found' });
-  }
-
-  list[index].status = status;
-  list[index].updated_at = new Date().toISOString();
-  saveRequests(list);
-
-  res.json({ success: true, request: list[index] });
 });
 
 // Submit New Booking / Quote Request (Public)
@@ -481,37 +426,40 @@ app.post(['/api/quote-requests', '/api/bookings'], async (req, res) => {
     },
   };
 
-  // Persist to database
-  const list = getRequests();
-  list.unshift(newBooking);
-  saveRequests(list);
+  try {
+    // Persist to database (Firestore)
+    await addDoc(collection(db, 'quote_requests'), newBooking);
 
-  // Trigger real email / SMTP notification
-  sendBookingEmails(newBooking).catch((e) => console.error('Email background send error:', e));
+    // Trigger real email / SMTP notification
+    sendBookingEmails(newBooking).catch((e) => console.error('Email background send error:', e));
 
-  console.log(`\n======================================================`);
-  console.log(`🔔 NEW BOOKING / QUOTE REQUEST REGISTERED [${reference_id}]`);
-  console.log(`From: ${name} (${company}) | Email: ${email} | Phone: ${phone}`);
-  console.log(`Route: ${pickup} ➔ ${destination} | Date: ${date}`);
-  console.log(`======================================================\n`);
+    console.log(`\n======================================================`);
+    console.log(`🔔 NEW BOOKING / QUOTE REQUEST REGISTERED [${reference_id}]`);
+    console.log(`From: ${name} (${company}) | Email: ${email} | Phone: ${phone}`);
+    console.log(`Route: ${pickup} ➔ ${destination} | Date: ${date}`);
+    console.log(`======================================================\n`);
 
-  res.status(201).json({
-    success: true,
-    referenceId: reference_id,
-    reference_id,
-    status: 'new',
-    message: 'Your request has been received. Our team is working on your request and will update you within 2–3 hours.',
-    slaMessage: 'If you do not hear back within 24 hours, please call our 24/7 desk at 0124 4974856.',
-    booking: newBooking,
-  });
+    res.status(201).json({
+      success: true,
+      referenceId: reference_id,
+      reference_id,
+      status: 'new',
+      message: 'Your request has been received. Our team is working on your request and will update you within 2–3 hours.',
+      slaMessage: 'If you do not hear back within 24 hours, please call our 24/7 desk at 0124 4974856.',
+      booking: newBooking,
+    });
+  } catch (error) {
+    console.error('Failed to submit quote:', error);
+    res.status(500).json({ error: 'Failed to submit quote request' });
+  }
 });
 
 // ─── Vite Middleware & Static Serving ───
 
-async function startServer() {
-  initDatabase();
 
+async function startServer() {
   if (process.env.NODE_ENV !== 'production') {
+    const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
@@ -520,13 +468,13 @@ async function startServer() {
   } else {
     const distPath = path.join(process.cwd(), 'dist');
     app.use(express.static(distPath));
-    app.get('*', (req, res) => {
+    app.get('*all', (req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));
     });
   }
 
   app.listen(PORT, '0.0.0.0', () => {
-    console.log(`[Amabze Server] Backend and Vite ready on http://0.0.0.0:${PORT}`);
+    console.log(`[Amabze Server] Backend ready on http://0.0.0.0:${PORT}`);
   });
 }
 
