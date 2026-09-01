@@ -66,10 +66,13 @@ export default function Footer() {
           <motion.div className={styles.column}>
             <motion.div
               className={styles.brand}
-              whileHover={{ scale: 1.02 }}
+              whileHover={{ scale: 1.01 }}
             >
               <img src={logo} alt="Amabze Rentals Logo" className={styles.logoImage} loading="lazy" />
-              <span className={styles.companyName}>AMABZE RENTALS</span>
+              <div>
+                <span className={styles.companyName}>AMABZE RENTALS</span>
+                <span className={styles.companySuffix}> PVT. LTD.</span>
+              </div>
             </motion.div>
             <motion.p className={styles.description}>
               Professional chauffeur services and corporate mobility solutions across India.

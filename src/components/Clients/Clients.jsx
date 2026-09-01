@@ -9,6 +9,8 @@ const clientsList = [
   { name: 'Michael Page', category: 'Global Recruitment & Advisory' },
   { name: 'Wizcraft Entertainment', category: 'Mega Events & Logistics' },
   { name: 'Cyril Amarchand Mangaldas', category: 'Premier Legal Advisory' },
+  { name: 'AIS (Asahi India Glass Limited)', category: 'Automotive & Industrial Glass' },
+  { name: 'Eurofins Analytical Services India Pvt. Ltd.', category: 'Bio-Analytical & Testing Solutions' },
   { name: 'Berger Paints', category: 'Manufacturing & Industrial' },
   { name: 'Mark & Spencer', category: 'Retail & Consumer Brands' },
   { name: 'Showboat', category: 'Media & Entertainment' },

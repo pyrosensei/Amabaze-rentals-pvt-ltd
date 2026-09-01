@@ -44,99 +44,124 @@ export default function Header() {
 
   return (
     <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
-      <motion.div className={styles.scrollProgress} style={{ scaleX: progressScaleX }} />
-      <div className={styles.container}>
-        <motion.a
-          href="#top"
-          className={styles.logoContainer}
-          onClick={(e) => {
-            e.preventDefault();
-            closeMobileMenu();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          <img src={logo} alt="Amabze Rentals Logo" className={styles.logoImage} />
-          <div className={styles.brandMeta}>
-            <div className={styles.brandTitleRow}>
-              <span className={styles.companyName}>AMABZE RENTALS</span>
-              <span className={styles.panIndiaBadge}>PAN-INDIA</span>
-            </div>
-            <span className={styles.brandSub}>Corporate Chauffeur & Fleet Solutions</span>
+      {/* Top Corporate Assurance Bar */}
+      <div className={styles.topUtilityBar}>
+        <div className={styles.topUtilityInner}>
+          <div className={styles.topUtilityLeft}>
+            <span className={styles.utilityDot} />
+            <span className={styles.utilityText}>
+              Govt. Registered Enterprise • CIN: U34300HR2022PTC102048 • 100% Statutory Compliant
+            </span>
           </div>
-        </motion.a>
-
-        {/* Desktop Navigation */}
-        <nav className={styles.desktopNav}>
-          <ul className={styles.navList}>
-            {navLinks.map((link) => (
-              <li key={link.name}>
-                <a href={link.href} className={styles.navLink}>
-                  {link.name}
-                </a>
-              </li>
-            ))}
-          </ul>
-
-          <div className={styles.headerActions}>
-            <button
-              type="button"
-              className={styles.headerTrackBtn}
-              onClick={() => setIsTrackOpen(true)}
-              title="Track Booking Status by Reference ID"
-            >
-              <Search size={13} />
-              <span>Track Trip</span>
-            </button>
-
-            <a href="tel:+917982265845" className={styles.headerPhone} title="24/7 Operations Desk">
-              <PhoneCall size={13} />
-              <span>0124 4974856</span>
+          <div className={styles.topUtilityRight}>
+            <span className={styles.utilityBadge}>24×7 Central Dispatch Active</span>
+            <a href="tel:+917982265845" className={styles.utilityHotline}>
+              <PhoneCall size={12} />
+              <span>Priority Hotline: +91 79822 65845 / 0124 4974856</span>
             </a>
-
-            <motion.a
-              href="#contact"
-              className={styles.ctaButton}
-              whileHover={{ y: -2, scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <span>Get Proposal</span>
-              <ArrowRight size={14} />
-            </motion.a>
           </div>
-        </nav>
+        </div>
+      </div>
 
-        {/* Mobile Menu Toggle */}
-        <button
-          className={styles.mobileMenuToggle}
-          onClick={toggleMobileMenu}
-          aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
-        >
-          <AnimatePresence mode="wait">
-            {isMobileMenuOpen ? (
-              <motion.div
-                key="close"
-                initial={{ rotate: 90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: -90, opacity: 0 }}
-                transition={{ duration: 0.15 }}
+      <motion.div className={styles.scrollProgress} style={{ scaleX: progressScaleX }} />
+
+      {/* Main Header Container */}
+      <div className={styles.mainHeader}>
+        <div className={styles.container}>
+          {/* Prominent Master Brand Lockup */}
+          <motion.a
+            href="#top"
+            className={styles.logoContainer}
+            onClick={(e) => {
+              e.preventDefault();
+              closeMobileMenu();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
+          >
+            <div className={styles.logoBadge}>
+              <img src={logo} alt="Amabze Rentals Pvt Ltd" className={styles.logoImage} />
+            </div>
+            <div className={styles.brandMeta}>
+              <div className={styles.brandTitleRow}>
+                <h1 className={styles.companyName}>
+                  AMABZE RENTALS <span className={styles.companySuffix}>PVT. LTD.</span>
+                </h1>
+                <span className={styles.panIndiaBadge}>PAN-INDIA</span>
+              </div>
+              <p className={styles.brandSub}>Corporate Chauffeur Services & Fleet Leasing Across India</p>
+            </div>
+          </motion.a>
+
+          {/* Desktop Navigation & Actions */}
+          <div className={styles.desktopControls}>
+            <nav className={styles.desktopNav} aria-label="Main Navigation">
+              <ul className={styles.navList}>
+                {navLinks.map((link) => (
+                  <li key={link.name}>
+                    <a href={link.href} className={styles.navLink}>
+                      {link.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            <div className={styles.headerActions}>
+              <button
+                type="button"
+                className={styles.headerTrackBtn}
+                onClick={() => setIsTrackOpen(true)}
+                title="Track Booking Status by Reference ID"
               >
-                <X size={22} />
-              </motion.div>
-            ) : (
-              <motion.div
-                key="menu"
-                initial={{ rotate: -90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: 90, opacity: 0 }}
-                transition={{ duration: 0.15 }}
+                <Search size={14} />
+                <span>Track Trip</span>
+              </button>
+
+              <motion.a
+                href="#contact"
+                className={styles.ctaButton}
+                whileHover={{ y: -2, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
-                <Menu size={22} />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </button>
+                <span>Get Proposal</span>
+                <ArrowRight size={14} />
+              </motion.a>
+            </div>
+          </div>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            className={styles.mobileMenuToggle}
+            onClick={toggleMobileMenu}
+            aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+          >
+            <AnimatePresence mode="wait">
+              {isMobileMenuOpen ? (
+                <motion.div
+                  key="close"
+                  initial={{ rotate: 90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -90, opacity: 0 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  <X size={24} />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="menu"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  <Menu size={24} />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </button>
+        </div>
       </div>
 
       {/* Mobile Drawer Overlay */}
